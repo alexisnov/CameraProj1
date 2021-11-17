@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),str);
         outputFileUri = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider",file);
         try{
-            takePhotoIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            takePhotoIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            //takePhotoIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            //takePhotoIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT,outputFileUri);
             startActivityForResult(takePhotoIntent,REQUEST_TAKE_PHOTO);
         }catch (ActivityNotFoundException e){
@@ -90,10 +90,10 @@ public class MainActivity extends AppCompatActivity {
                     Bundle extras = data.getExtras();
                     Bitmap thumbnailBitmap = (Bitmap) extras.get("data");
                     imageView.setImageBitmap(thumbnailBitmap);
+                }else{
+                    //Сохранённое изображение
+                    imageView.setImageURI(outputFileUri);
                 }
-            }else{
-                //Сохранённое изображение
-                imageView.setImageURI(outputFileUri);
             }
 
         }
