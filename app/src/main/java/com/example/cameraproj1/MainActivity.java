@@ -67,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
     private void saveFullImage() {//Сохранение фотографии
         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         String str = String.format("%d.jpg",System.currentTimeMillis()/1000);
-        File file = new File(Environment.getExternalStorageDirectory(),str);
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),str);
         outputFileUri = FileProvider.getUriForFile(this, this.getApplicationContext().getPackageName() + ".provider",file);
         try{
-            takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT,outputFileUri);
             takePhotoIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             takePhotoIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT,outputFileUri);
             startActivityForResult(takePhotoIntent,REQUEST_TAKE_PHOTO);
         }catch (ActivityNotFoundException e){
             e.printStackTrace();
